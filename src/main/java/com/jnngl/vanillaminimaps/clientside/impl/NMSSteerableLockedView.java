@@ -95,7 +95,7 @@ public class NMSSteerableLockedView implements SteerableLockedView {
 
     inject(connection.connection.channel);
 
-    Bukkit.getScheduler().runTaskLater(VanillaMinimaps.get(), () -> {
+    VanillaMinimaps.get().getScheduler().runTaskLaterAtEntity(player, () -> {
       connection.send(new ClientboundSetCameraPacket(viewer));
       connection.send(new ClientboundSetPassengersPacket(viewer));
       connection.send(new ClientboundPlayerInfoRemovePacket(Collections.singletonList(viewer.getUUID())));
@@ -206,8 +206,8 @@ public class NMSSteerableLockedView implements SteerableLockedView {
     );
     connection.send(new ClientboundGameEventPacket(ClientboundGameEventPacket.CHANGE_GAME_MODE, serverPlayer.gameMode.getGameModeForPlayer().getId()));
 
-    Bukkit.getScheduler().runTask(VanillaMinimaps.get(), () -> {
-      player.teleport(origin);
+    VanillaMinimaps.get().getScheduler().runTaskAtEntity(player, () -> {
+      player.teleportAsync(origin);
       deject(connection.connection.channel);
     });
   }

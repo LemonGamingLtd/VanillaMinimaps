@@ -66,7 +66,8 @@ public class MinimapListener implements Listener {
 
   @EventHandler
   public void onJoin(PlayerJoinEvent event) {
-    Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+    Player player = event.getPlayer();
+    plugin.getScheduler().runTaskAtEntity(player, () -> {
       try {
         plugin.playerDataStorage().restore(plugin, event.getPlayer());
       } catch (Exception e) {
@@ -105,7 +106,7 @@ public class MinimapListener implements Listener {
         if (area.x() >= player.getX() - 64 && area.y() >= player.getZ() - 64 &&
             area.x() + area.z() <= player.getX() + 64 && area.y() + area.w() <= player.getZ() + 64 &&
             requestedUpdates.add(player.getUniqueId())) {
-          Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () -> {
+          plugin.getScheduler().runTaskAtEntity(player, () -> {
             if (requestedUpdates.remove(player.getUniqueId())) {
               minimap.update(plugin, player.getX(), player.getZ(), false);
             }
@@ -221,9 +222,9 @@ public class MinimapListener implements Listener {
   @SneakyThrows
   @EventHandler
   public void onQuit(PlayerQuitEvent event) {
-    Bukkit.getScheduler().scheduleSyncDelayedTask(plugin, () ->
-        disableMinimap(event.getPlayer()));
-    Minimap minimap = playerMinimaps.get(event.getPlayer());
+    Player player = event.getPlayer();
+    plugin.getScheduler().runTaskAtEntity(player, () -> disableMinimap(player));
+    Minimap minimap = playerMinimaps.get(player);
     plugin.playerDataStorage().save(minimap);
   }
 }

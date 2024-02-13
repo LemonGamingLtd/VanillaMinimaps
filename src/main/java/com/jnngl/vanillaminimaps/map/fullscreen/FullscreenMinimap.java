@@ -27,11 +27,11 @@ import com.jnngl.vanillaminimaps.map.renderer.MinimapLayerRenderer;
 import com.jnngl.vanillaminimaps.map.renderer.encoder.FullscreenMapEncoder;
 import com.jnngl.vanillaminimaps.map.renderer.world.WorldMinimapRenderer;
 import lombok.*;
+import me.nahu.scheduler.wrapper.task.WrappedTask;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitTask;
 
 import java.util.*;
 import java.util.concurrent.*;
@@ -66,7 +66,7 @@ public class FullscreenMinimap {
 
   public CompletableFuture<Void> fadeIn(MinimapProvider provider, Function<Double, Double> easing, int duration) {
     CompletableFuture<Void> transitionFuture = new CompletableFuture<>();
-    BukkitTask task = Bukkit.getScheduler().runTaskTimer(VanillaMinimaps.get(), new Runnable() {
+    WrappedTask task = VanillaMinimaps.get().getScheduler().runTaskTimerAtEntity(holder, new Runnable() {
 
       private int tick = 0;
 
@@ -95,7 +95,7 @@ public class FullscreenMinimap {
           transitionFuture.complete(null);
         }
       }
-    }, 0L, 1L);
+    }, 1L, 1L);
 
     return transitionFuture.whenComplete((v, t) -> task.cancel());
   }

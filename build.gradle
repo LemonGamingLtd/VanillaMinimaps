@@ -18,10 +18,15 @@ repositories {
         setName("sonatype")
         setUrl("https://oss.sonatype.org/content/groups/public/")
     }
+    maven {
+        setName("jitpack")
+        setUrl("https://jitpack.io")
+    }
 }
 
 dependencies {
     paperweightDevelopmentBundle("io.papermc.paper:dev-bundle:1.20.4-R0.1-SNAPSHOT")
+    implementation("com.github.NahuLD:folia-scheduler-wrapper:v0.0.2")
     implementation("net.elytrium:serializer:1.1.1")
     implementation("com.jnngl:mapcolor:1.0.1")
     compileOnly("io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT")
@@ -35,6 +40,7 @@ dependencies {
 shadowJar {
     relocate("net.elytrium.serializer", "com.jnngl.vanillaminimaps.serializer")
     relocate("org.bstats", "com.jnngl.vanillaminimaps.metrics")
+    relocate("me.nahu.scheduler", "com.jnngl.vanillaminimaps.scheduler")
     exclude("org/slf4j/**")
     minimize()
 }

@@ -42,6 +42,8 @@ import com.jnngl.vanillaminimaps.map.renderer.world.provider.MinimapWorldRendere
 import com.jnngl.vanillaminimaps.storage.MinimapPlayerDatabase;
 import lombok.Getter;
 import lombok.SneakyThrows;
+import me.nahu.scheduler.wrapper.WrappedScheduler;
+import me.nahu.scheduler.wrapper.WrappedSchedulerBuilder;
 import org.bstats.bukkit.Metrics;
 import org.bstats.charts.SimplePie;
 import org.bukkit.Bukkit;
@@ -100,9 +102,15 @@ public final class VanillaMinimaps extends JavaPlugin implements MinimapProvider
   @MonotonicNonNull
   private MinimapPlayerDatabase playerDataStorage;
 
+  @MonotonicNonNull
+  private WrappedScheduler scheduler;
+
   @Override
   @SneakyThrows
   public void onEnable() {
+    scheduler = WrappedSchedulerBuilder.builder().plugin(this).build();
+    getLogger().info("Successfully initialized scheduler of type: " + scheduler.getImplementationType());
+
     System.setProperty("com.j256.simplelogging.level", "ERROR");
     PLUGIN.set(this);
 
@@ -207,6 +215,10 @@ public final class VanillaMinimaps extends JavaPlugin implements MinimapProvider
 
   public PassengerRewriter getPassengerRewriter(Player player) {
     return passengerRewriters.get(player);
+  }
+
+  public WrappedScheduler getScheduler() {
+    return scheduler;
   }
 
   @EventHandler(priority = EventPriority.HIGH)
