@@ -103,6 +103,7 @@ public final class VanillaMinimaps extends JavaPlugin implements MinimapProvider
   private MinimapPlayerDatabase playerDataStorage;
 
   @MonotonicNonNull
+  @Getter
   private WrappedScheduler scheduler;
 
   @Override
@@ -215,10 +216,6 @@ public final class VanillaMinimaps extends JavaPlugin implements MinimapProvider
 
   public PassengerRewriter getPassengerRewriter(Player player) {
     return passengerRewriters.get(player);
-  }
-
-  public WrappedScheduler getScheduler() {
-    return scheduler;
   }
 
   @EventHandler(priority = EventPriority.HIGH)
