@@ -32,6 +32,7 @@ import com.jnngl.vanillaminimaps.map.SecondaryMinimapLayer;
 import com.jnngl.vanillaminimaps.map.icon.MinimapIcon;
 import com.jnngl.vanillaminimaps.map.marker.MarkerMinimapLayer;
 import com.jnngl.vanillaminimaps.map.renderer.MinimapIconRenderer;
+import com.jnngl.vanillaminimaps.util.PlayerUtil;
 import it.unimi.dsi.fastutil.ints.IntArrayList;
 import it.unimi.dsi.fastutil.ints.IntList;
 import org.bukkit.Location;
@@ -67,6 +68,10 @@ public class MinimapPlayerDatabase {
   }
 
   public void restore(MinimapProvider provider, Player player) throws Exception {
+    if (PlayerUtil.isBedrockPlayer(player)) {
+      return;
+    }
+
     provider.minimapListener().disableMinimap(player);
 
     DatabasePlayerModel data = queryPlayer(player);
@@ -116,6 +121,10 @@ public class MinimapPlayerDatabase {
 
   public void save(Minimap minimap) throws Exception {
     Player player = minimap.holder();
+    if (PlayerUtil.isBedrockPlayer(player)) {
+      return;
+    }
+
     DatabasePlayerModel queriedModel = queryPlayer(player);
     DatabasePlayerModel playerModel = queriedModel != null ? queriedModel : new DatabasePlayerModel();
 
@@ -159,6 +168,10 @@ public class MinimapPlayerDatabase {
   }
 
   public void disableMinimap(Player player) throws SQLException {
+    if (PlayerUtil.isBedrockPlayer(player)) {
+      return;
+    }
+
     DatabasePlayerModel model = queryPlayer(player);
     if (model == null) {
       model = new DatabasePlayerModel(player.getUniqueId(), false, Config.instance().defaultPosition, null, null);
@@ -169,6 +182,10 @@ public class MinimapPlayerDatabase {
   }
 
   public void enableMinimap(Player player) throws SQLException {
+    if (PlayerUtil.isBedrockPlayer(player)) {
+      return;
+    }
+
     DatabasePlayerModel model = queryPlayer(player);
     if (model == null) {
       model = new DatabasePlayerModel(player.getUniqueId(), true, Config.instance().defaultPosition, null, null);

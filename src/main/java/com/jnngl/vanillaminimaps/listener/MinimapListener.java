@@ -33,6 +33,7 @@ import com.jnngl.vanillaminimaps.map.renderer.MinimapLayerRenderer;
 import com.jnngl.vanillaminimaps.map.renderer.world.WorldMinimapRenderer;
 import com.jnngl.vanillaminimaps.map.renderer.world.cache.CacheableWorldMinimapRenderer;
 import com.jnngl.vanillaminimaps.map.renderer.MinimapIconRenderer;
+import com.jnngl.vanillaminimaps.util.PlayerUtil;
 import it.unimi.dsi.fastutil.ints.IntIntImmutablePair;
 import lombok.Getter;
 import lombok.SneakyThrows;
@@ -77,6 +78,10 @@ public class MinimapListener implements Listener {
   }
 
   public Minimap enableMinimap(Player player) {
+    if (PlayerUtil.isBedrockPlayer(player)) {
+      return null;
+    }
+
     if (playerMinimaps.containsKey(player)) {
       return playerMinimaps.get(player);
     }
@@ -120,6 +125,10 @@ public class MinimapListener implements Listener {
   }
 
   public void disableMinimap(Player player) {
+    if (PlayerUtil.isBedrockPlayer(player)) {
+      return;
+    }
+
     playerSections.remove(player);
     Minimap minimap = playerMinimaps.remove(player);
     if (minimap != null) {
@@ -224,7 +233,10 @@ public class MinimapListener implements Listener {
   public void onQuit(PlayerQuitEvent event) {
     Player player = event.getPlayer();
     plugin.getScheduler().runTaskAtEntity(player, () -> disableMinimap(player));
+
     Minimap minimap = playerMinimaps.get(player);
-    plugin.playerDataStorage().save(minimap);
+    if (minimap != null) {
+      plugin.playerDataStorage().save(minimap);
+    }
   }
 }

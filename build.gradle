@@ -22,6 +22,10 @@ repositories {
         setName("jitpack")
         setUrl("https://jitpack.io")
     }
+    maven {
+        setName("opencollab-repo")
+        setUrl("https://repo.opencollab.dev/main/")
+    }
 }
 
 dependencies {
@@ -29,6 +33,7 @@ dependencies {
     implementation("com.github.NahuLD:folia-scheduler-wrapper:v0.0.2")
     implementation("net.elytrium:serializer:1.1.1")
     implementation("com.jnngl:mapcolor:1.0.1")
+    compileOnly("org.geysermc.floodgate:api:2.2.2-SNAPSHOT")
     compileOnly("io.papermc.paper:paper-api:1.20.4-R0.1-SNAPSHOT")
     annotationProcessor("org.projectlombok:lombok:1.18.30")
     compileOnly("org.projectlombok:lombok:1.18.30")
