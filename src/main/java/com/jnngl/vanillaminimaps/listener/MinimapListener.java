@@ -37,7 +37,6 @@ import com.jnngl.vanillaminimaps.util.PlayerUtil;
 import it.unimi.dsi.fastutil.ints.IntIntImmutablePair;
 import lombok.Getter;
 import lombok.SneakyThrows;
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -78,7 +77,7 @@ public class MinimapListener implements Listener {
   }
 
   public Minimap enableMinimap(Player player) {
-    if (PlayerUtil.isBedrockPlayer(player)) {
+    if (!PlayerUtil.isValidPlayerClient(player)) {
       return null;
     }
 
@@ -125,7 +124,7 @@ public class MinimapListener implements Listener {
   }
 
   public void disableMinimap(Player player) {
-    if (PlayerUtil.isBedrockPlayer(player)) {
+    if (!PlayerUtil.isValidPlayerClient(player)) {
       return;
     }
 

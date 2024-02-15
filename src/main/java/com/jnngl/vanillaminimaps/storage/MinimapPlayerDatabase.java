@@ -68,7 +68,7 @@ public class MinimapPlayerDatabase {
   }
 
   public void restore(MinimapProvider provider, Player player) throws Exception {
-    if (PlayerUtil.isBedrockPlayer(player)) {
+    if (!PlayerUtil.isValidPlayerClient(player)) {
       return;
     }
 
@@ -121,7 +121,7 @@ public class MinimapPlayerDatabase {
 
   public void save(Minimap minimap) throws Exception {
     Player player = minimap.holder();
-    if (PlayerUtil.isBedrockPlayer(player)) {
+    if (!PlayerUtil.isValidPlayerClient(player)) {
       return;
     }
 
@@ -168,7 +168,7 @@ public class MinimapPlayerDatabase {
   }
 
   public void disableMinimap(Player player) throws SQLException {
-    if (PlayerUtil.isBedrockPlayer(player)) {
+    if (!PlayerUtil.isValidPlayerClient(player)) {
       return;
     }
 
@@ -182,7 +182,7 @@ public class MinimapPlayerDatabase {
   }
 
   public void enableMinimap(Player player) throws SQLException {
-    if (PlayerUtil.isBedrockPlayer(player)) {
+    if (!PlayerUtil.isValidPlayerClient(player)) {
       return;
     }
 
