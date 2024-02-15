@@ -36,7 +36,7 @@ public final class PlayerUtil {
      */
     public static int getPlayerProtocolVersion(@NotNull Player player) {
         if (!Bukkit.getPluginManager().isPluginEnabled(PROTOCOL_PLUGIN_NAME)) {
-            return -1;
+            return VALID_PROTOCOL_VERSION;
         }
         return ProtocolLibrary.getProtocolManager().getProtocolVersion(player);
     }
